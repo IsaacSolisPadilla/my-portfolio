@@ -67,9 +67,9 @@ export default {
     drawParticle(p) {
       const ctx = this.ctx
       ctx.beginPath()
-      ctx.fillStyle = `rgba(99, 102, 241, ${p.alpha})` // Indigo-500 pastel
-      ctx.shadowColor = `rgba(99, 102, 241, 0.5)`
-      ctx.shadowBlur = 12
+      ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`
+      ctx.shadowColor = `rgba(173, 216, 230, 0.3)`
+      ctx.shadowBlur = 20
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
       ctx.fill()
     },
@@ -83,8 +83,8 @@ export default {
           const dist = Math.sqrt(dx * dx + dy * dy)
           if (dist < maxDist) {
             const opacity = 0.15 * (1 - dist / maxDist)
-            ctx.strokeStyle = `rgba(99, 102, 241, ${opacity})`
-            ctx.lineWidth = 1.1
+            ctx.strokeStyle = `rgba(173, 216, 255, ${opacity})` // azul claro neón
+            ctx.lineWidth = 1.5 // un poco más gruesas
             ctx.beginPath()
             ctx.moveTo(this.particles[a].x, this.particles[a].y)
             ctx.lineTo(this.particles[b].x, this.particles[b].y)
@@ -100,8 +100,8 @@ export default {
       // Fondo degradado con wave
       const gradient = ctx.createLinearGradient(0, 0, this.width, this.height)
       const waveIntensity = Math.sin(this.waveOffset) * 0.1 + 0.4
-      gradient.addColorStop(0, `rgba(15, 23, 42, ${waveIntensity})`) // slate-900
-      gradient.addColorStop(1, `rgba(99, 102, 241, ${waveIntensity})`) // indigo-500
+      gradient.addColorStop(0, `rgba(0, 0, 0, ${waveIntensity})`)
+      gradient.addColorStop(1, `rgba(0, 0, 0, ${waveIntensity})`)
       ctx.fillStyle = gradient
       ctx.fillRect(0, 0, this.width, this.height)
 
@@ -109,6 +109,7 @@ export default {
         // Movimiento base
         p.x += p.speedX
         p.y += p.speedY
+        p.size = 2 + Math.sin(p.angle) * 2
 
         // Vuelven a rebotar en bordes
         if (p.x < 0 || p.x > this.width) p.speedX *= -1
@@ -125,8 +126,8 @@ export default {
           if (dist < this.mouse.radius) {
             // Fuerza inversa proporcional a distancia
             const force = (this.mouse.radius - dist) / this.mouse.radius
-            p.x += dx / dist * force * 5
-            p.y += dy / dist * force * 5
+            p.x += dx / dist * force * 10
+            p.y += dy / dist * force * 10
           }
         }
 

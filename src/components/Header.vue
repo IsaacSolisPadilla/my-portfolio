@@ -2,7 +2,7 @@
   <header
     :class="[
       'fixed w-full top-0 left-0 z-50 transition-all duration-500',
-      scrolled ? 'bg-indigo-900 bg-opacity-90 shadow-xl backdrop-blur-md' : 'bg-transparent'
+      'bg-indigo-900 bg-opacity-90 shadow-xl backdrop-blur-md'
     ]"
   >
     <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4 md:py-5">
@@ -11,7 +11,7 @@
       </h1>
 
       <!-- Desktop Nav -->
-      <nav class="hidden md:flex space-x-10 font-semibold text-indigo-200">
+      <nav class="hidden md:flex items-center space-x-8 font-semibold text-indigo-200">
         <a
           v-for="link in navLinks"
           :key="link.id"
@@ -19,11 +19,23 @@
           class="relative group px-1 py-2 hover:text-indigo-400 transition-colors"
           @click.prevent="scrollToSection(link.href)"
         >
-          {{ link.label }}
-          <span
-            class="absolute left-0 -bottom-1 w-0 h-0.5 bg-indigo-400 transition-all group-hover:w-full"
-          ></span>
+          {{ $t(link.label) }}
+          <span class="absolute left-0 -bottom-1 w-0 h-0.5 bg-indigo-400 transition-all group-hover:w-full"></span>
         </a>
+
+        <!-- Language Switcher -->
+        <div class="flex gap-2 items-center ml-4">
+          <button
+            v-for="lang in languages"
+            :key="lang.code"
+            @click="switchLanguage(lang.code)"
+            :aria-label="lang.label"
+            class="text-xl hover:scale-125 transition-transform duration-300 focus:outline-none"
+            :class="{ 'opacity-100': currentLang === lang.code, 'opacity-50': currentLang !== lang.code }"
+          >
+            {{ lang.emoji }}
+          </button>
+        </div>
       </nav>
 
       <!-- Mobile Menu Button -->
@@ -66,39 +78,67 @@
           class="block text-lg hover:text-indigo-400 transition-colors"
           @click.prevent="scrollToSection(link.href); toggleMenu()"
         >
-          {{ link.label }}
+          {{ $t(link.label) }}
         </a>
+
+        <!-- Language Switcher Mobile -->
+        <div class="flex gap-4 justify-center mt-6">
+          <button
+            v-for="lang in languages"
+            :key="lang.code + '-mobile'"
+            @click="switchLanguage(lang.code)"
+            :aria-label="lang.label"
+            class="text-2xl hover:scale-125 transition-transform duration-300 focus:outline-none"
+            :class="{ 'opacity-100': currentLang === lang.code, 'opacity-50': currentLang !== lang.code }"
+          >
+            {{ lang.emoji }}
+          </button>
+        </div>
       </nav>
     </transition>
   </header>
 </template>
 
 <script>
+import { useI18n } from 'vue-i18n'
+
 export default {
   name: 'Header',
+  setup() {
+    const { locale, t } = useI18n()
+
+    const navLinks = [
+      { id: 1, label: 'nav.about', href: '#about' },
+      { id: 2, label: 'nav.projects', href: '#projects' },
+      { id: 3, label: 'nav.contact', href: '#contact' },
+      { id: 4, label: 'nav.skills', href: '#skills' },
+    ]
+
+    const languages = [
+      { code: 'es', label: 'Español', emoji: '🇪🇸' },
+      { code: 'en', label: 'English', emoji: '🇬🇧' },
+    ]
+
+    const switchLanguage = (lang) => {
+      locale.value = lang
+    }
+
+    return {
+      navLinks,
+      languages,
+      currentLang: locale,
+      switchLanguage,
+      t,
+    }
+  },
   data() {
     return {
       menuOpen: false,
-      scrolled: false,
-      navLinks: [
-        { id: 1, label: 'Sobre mí', href: '#about' },
-        { id: 2, label: 'Proyectos', href: '#projects' },
-        { id: 3, label: 'Contacto', href: '#contact' },
-      ],
     }
-  },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll)
-  },
-  beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
     toggleMenu() {
       this.menuOpen = !this.menuOpen
-    },
-    handleScroll() {
-      this.scrolled = window.scrollY > 40
     },
     scrollToSection(id) {
       const el = document.querySelector(id)

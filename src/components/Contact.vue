@@ -3,9 +3,9 @@
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-20">
       <!-- Left: Texto + contactos -->
       <div class="flex flex-col justify-center text-center md:text-left md:w-1/2 text-gray-300 space-y-10">
-        <h2 class="text-6xl font-extrabold tracking-tight text-white drop-shadow-xl">Contacto</h2>
+        <h2 class="text-6xl font-extrabold tracking-tight text-white drop-shadow-xl">{{ $t('contact.title') }}</h2>
         <p class="text-lg max-w-lg leading-relaxed text-gray-400 tracking-wide">
-          ¿Quieres colaborar? ¿Tienes alguna consulta o propuesta? Escríbeme o conéctate conmigo a través de mis redes profesionales.
+          {{ $t('contact.description') }}
         </p>
 
         <div class="flex justify-center md:justify-start gap-12 mt-6">
@@ -26,7 +26,7 @@
                 d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.11.82-.26.82-.577v-2.234c-3.338.726-4.033-1.61-4.033-1.61-.546-1.39-1.333-1.76-1.333-1.76-1.09-.745.084-.73.084-.73 1.205.086 1.84 1.237 1.84 1.237 1.07 1.834 2.81 1.304 3.495.997.108-.775.418-1.304.76-1.604-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.47-2.38 1.235-3.22-.123-.303-.535-1.523.117-3.176 0 0 1.005-.322 3.3 1.23a11.52 11.52 0 013-.404c1.02.005 2.045.137 3 .404 2.28-1.552 3.285-1.23 3.285-1.23.655 1.653.243 2.873.12 3.176.77.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.922.43.37.815 1.1.815 2.22v3.293c0 .32.217.694.825.576C20.565 21.796 24 17.296 24 12c0-6.63-5.373-12-12-12z"
               />
             </svg>
-            <span class="font-semibold text-base">GitHub</span>
+            <span class="font-semibold text-base">{{ $t('contact.github') }}</span>
           </a>
 
           <!-- LinkedIn -->
@@ -46,7 +46,7 @@
                 d="M4.983 3.5C4.983 4.88 3.9 6 2.5 6S.017 4.88.017 3.5 1.1 1 2.5 1 4.983 2.12 4.983 3.5zM.117 7h4.83v14H.117zM8.596 7h4.63v2.337h.064c.646-1.225 2.227-2.516 4.585-2.516 4.904 0 5.805 3.23 5.805 7.424V21H18.23v-7.3c0-1.743-.03-3.988-2.43-3.988-2.43 0-2.8 1.894-2.8 3.853V21H8.596z"
               />
             </svg>
-            <span class="font-semibold text-base">LinkedIn</span>
+            <span class="font-semibold text-base">{{ $t('contact.linkedin') }}</span>
           </a>
         </div>
       </div>
@@ -58,43 +58,43 @@
         class="bg-gray-900 p-12 rounded-3xl shadow-2xl max-w-xl mx-auto w-full text-gray-300"
       >
         <h3 class="text-4xl font-extrabold mb-10 text-white tracking-wide drop-shadow-md">
-          Envíame un mensaje
+          {{ $t('contact.form.title') }}
         </h3>
 
         <div class="mb-8">
-          <label for="name" class="block mb-3 font-semibold text-lg">Nombre</label>
+          <label for="name" class="block mb-3 font-semibold text-lg">{{ $t('contact.form.name') }}</label>
           <Field
             name="name"
             id="name"
             as="input"
             type="text"
-            placeholder="Tu nombre completo"
+            placeholder="$t('contact.form.namePlaceholder')"
             class="w-full rounded-xl bg-gray-800 border border-gray-700 p-4 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-indigo-600 transition-shadow duration-300"
           />
           <ErrorMessage name="name" class="text-red-500 mt-2 text-sm" />
         </div>
 
         <div class="mb-8">
-          <label for="email" class="block mb-3 font-semibold text-lg">Correo electrónico</label>
+          <label for="email" class="block mb-3 font-semibold text-lg">{{ $t('contact.form.email') }}</label>
           <Field
             name="email"
             id="email"
             as="input"
             type="email"
-            placeholder="tu@email.com"
+            placeholder="$t('contact.form.emailPlaceholder')"
             class="w-full rounded-xl bg-gray-800 border border-gray-700 p-4 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-indigo-600 transition-shadow duration-300"
           />
           <ErrorMessage name="email" class="text-red-500 mt-2 text-sm" />
         </div>
 
         <div class="mb-10">
-          <label for="message" class="block mb-3 font-semibold text-lg">Mensaje</label>
+          <label for="message" class="block mb-3 font-semibold text-lg">{{ $t('contact.form.message') }}</label>
           <Field
             name="message"
             id="message"
             as="textarea"
             rows="7"
-            placeholder="Escribe tu mensaje aquí..."
+            placeholder="$t('contact.form.messagePlaceholder')"
             class="w-full rounded-xl bg-gray-800 border border-gray-700 p-4 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-indigo-600 transition-shadow duration-300 resize-none"
           />
           <ErrorMessage name="message" class="text-red-500 mt-2 text-sm" />
@@ -113,7 +113,7 @@
           type="submit"
           class="w-full bg-indigo-600 hover:bg-indigo-700 transition-colors py-5 rounded-2xl text-white font-extrabold flex items-center justify-center gap-4 disabled:opacity-60 disabled:cursor-not-allowed shadow-lg hover:shadow-indigo-500/50"
         >
-          <span v-if="!loading">Enviar mensaje</span>
+          <span v-if="!loading">{{ $t('contact.form.send') }}</span>
           <svg
             v-else
             class="animate-spin h-7 w-7 text-white"
