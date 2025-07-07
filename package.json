@@ -1,0 +1,31 @@
+{
+  "name": "my-portfolio",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@unhead/vue": "^2.0.11",
+    "@vueuse/motion": "^3.0.3",
+    "emailjs-com": "^3.2.0",
+    "gsap": "^3.13.0",
+    "gsp": "^0.5.4",
+    "vee-validate": "^4.15.1",
+    "vue": "^3.5.13",
+    "vue-i18n": "^11.1.7",
+    "vue-recaptcha": "^3.0.0-alpha.6",
+    "vue-recaptcha-v3": "^2.0.1",
+    "yup": "^1.6.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.10",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.3.5"
+  }
+}
