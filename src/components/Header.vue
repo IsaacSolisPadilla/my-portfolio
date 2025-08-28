@@ -2,30 +2,33 @@
   <header
     :class="[
       'fixed w-full top-0 left-0 z-50 transition-all duration-500',
-      'bg-indigo-900 bg-opacity-90 shadow-xl backdrop-blur-md'
+      'bg-gradient-to-r from-sky-500 via-indigo-600 to-fuchsia-600 shadow-2xl backdrop-blur-md'
     ]"
   >
     <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4 md:py-5">
-      <h1 class="text-2xl font-bold text-indigo-400 cursor-pointer select-none" @click="goTop">
+      <h1
+        class="text-2xl font-extrabold text-white drop-shadow-lg cursor-pointer select-none tracking-wide"
+        @click="goTop"
+      >
         Isaac Solis Padilla
       </h1>
 
       <!-- Desktop Nav -->
-      <nav class="hidden md:flex items-center space-x-8 font-semibold text-indigo-200">
+      <nav class="hidden md:flex items-center space-x-8 font-semibold text-white/90">
         <a
           v-for="link in navLinks"
           :key="link.id"
           :href="link.href"
           class="relative group px-1 py-2 transition-colors"
           :class="{
-            'text-indigo-400': activeSection === link.href,
-            'hover:text-indigo-400': activeSection !== link.href
+            'text-cyan-200': activeSection === link.href,
+            'hover:text-cyan-300': activeSection !== link.href
           }"
           @click.prevent="scrollToSection(link.href)"
         >
           {{ $t(link.label) }}
           <span
-            class="absolute left-0 -bottom-1 h-0.5 bg-indigo-400 transition-all"
+            class="absolute left-0 -bottom-1 h-0.5 bg-cyan-300 transition-all"
             :class="{
               'w-full': activeSection === link.href,
               'w-0 group-hover:w-full': activeSection !== link.href
@@ -56,19 +59,19 @@
       >
         <span
           :class="[
-            'block absolute h-0.5 w-8 bg-indigo-300 rounded transition-transform duration-300',
+            'block absolute h-0.5 w-8 bg-white rounded transition-transform duration-300',
             menuOpen ? 'rotate-45 top-3.5' : 'top-2'
           ]"
         ></span>
         <span
           :class="[
-            'block absolute h-0.5 w-8 bg-indigo-300 rounded transition-opacity duration-300',
+            'block absolute h-0.5 w-8 bg-white rounded transition-opacity duration-300',
             menuOpen ? 'opacity-0' : 'top-4'
           ]"
         ></span>
         <span
           :class="[
-            'block absolute h-0.5 w-8 bg-indigo-300 rounded transition-transform duration-300',
+            'block absolute h-0.5 w-8 bg-white rounded transition-transform duration-300',
             menuOpen ? '-rotate-45 top-3.5' : 'top-6'
           ]"
         ></span>
@@ -79,7 +82,7 @@
     <transition name="slide-fade">
       <nav
         v-if="menuOpen"
-        class="md:hidden bg-indigo-900 bg-opacity-95 backdrop-blur-sm py-6 px-8 space-y-6 font-semibold text-indigo-200"
+        class="md:hidden bg-gradient-to-b from-indigo-700 via-fuchsia-600 to-sky-500/90 backdrop-blur-sm py-6 px-8 space-y-6 font-semibold text-white/90 shadow-lg"
       >
         <a
           v-for="link in navLinks"
@@ -87,8 +90,8 @@
           :href="link.href"
           class="block text-lg transition-colors"
           :class="{
-            'text-indigo-400': activeSection === link.href,
-            'hover:text-indigo-400': activeSection !== link.href
+            'text-cyan-200': activeSection === link.href,
+            'hover:text-cyan-300': activeSection !== link.href
           }"
           @click.prevent="scrollToSection(link.href); toggleMenu()"
         >
@@ -112,6 +115,7 @@
     </transition>
   </header>
 </template>
+
 
 <script>
 import { useI18n } from 'vue-i18n'

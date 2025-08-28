@@ -1,100 +1,154 @@
 <template>
   <section id="projects" class="max-w-7xl mx-auto px-6 py-20 md:py-32">
+    <!-- Título -->
     <h2
-      class="text-4xl font-extrabold mb-12 text-indigo-400 tracking-wide text-center"
+      class="text-4xl md:text-5xl font-extrabold mb-12 text-center tracking-tight
+             bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-indigo-600 to-fuchsia-600"
       v-intersect.once="fadeIn"
     >
       {{ $t('projects.title') }}
     </h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    <!-- Grid de proyectos -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
       <article
         v-for="project in projects"
         :key="project.id"
-        class="bg-indigo-900 bg-opacity-70 rounded-xl shadow-xl overflow-hidden transform transition duration-400 hover:scale-[1.03] hover:shadow-indigo-500 cursor-pointer"
+        class="group rounded-2xl p-1 bg-gradient-to-br from-sky-500/25 via-indigo-600/25 to-fuchsia-600/25
+               hover:from-sky-500/35 hover:to-fuchsia-600/35 transition-colors"
         v-intersect.once="fadeInCard"
       >
-        <img
-          :src="project.image"
-          :alt="$t(project.title)"
-          :class="[
-            'w-full h-64 object-contain',
-            project.id === 3 ? 'scale-95' : 'scale-150'
-          ]"
-          loading="lazy"
-        />
-        <div class="p-12 flex flex-col justify-between h-95">
-          <div>
-            <h3 class="text-2xl font-semibold text-indigo-200 mb-3">
-              {{ $t(project.title) }}
-            </h3>
-            <p class="text-indigo-300 text-sm leading-relaxed mb-4">
+        <!-- Card interior (glass) -->
+        <div class="relative h-full rounded-2xl bg-white/80 backdrop-blur border border-white shadow-lg overflow-hidden">
+          <!-- Imagen -->
+          <div class="relative aspect-video overflow-hidden">
+            <img
+              :src="project.image"
+              :alt="$t(project.title)"
+              class="w-full h-full object-contain transition-transform duration-700 ease-out
+                     group-hover:scale-[1.04]"
+            />
+            <!-- Glow sutil -->
+            <div class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                 style="background: radial-gradient(60% 60% at 50% 50%, rgba(56,189,248,.25), rgba(167,139,250,.18), rgba(236,72,153,.14) 70%, transparent 75%);">
+            </div>
+
+            <!-- Indicador vídeo si es .mp4 -->
+            <button
+              v-if="project.demoUrl.endsWith('.mp4')"
+              @click.prevent="openVideoModal(project.demoUrl)"
+              class="absolute bottom-3 right-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-xl
+                     text-white text-sm font-semibold shadow-md
+                     bg-gradient-to-r from-sky-500 via-indigo-600 to-fuchsia-600 hover:brightness-110 active:scale-95"
+            >
+              ▶ {{ $t('projects.demo') }}
+            </button>
+          </div>
+
+          <!-- Contenido -->
+          <div class="p-6 flex flex-col h-full">
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="text-xl font-bold text-slate-900">
+                {{ $t(project.title) }}
+              </h3>
+            </div>
+
+            <p class="mt-2 text-slate-600 text-sm leading-relaxed">
               {{ $t(project.description) }}
             </p>
-            <div class="flex flex-wrap gap-2">
+
+            <!-- Chips -->
+            <div class="mt-4 flex flex-wrap gap-2">
               <span
                 v-for="tech in project.technologies"
                 :key="tech"
-                class="text-indigo-400 text-xs bg-indigo-700 px-3 py-1 rounded-full font-mono"
+                class="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200"
               >
                 {{ tech }}
               </span>
             </div>
-          </div>
-          <div class="mt-6 flex gap-4">
-           <a
-            v-if="project.demoUrl.endsWith('.mp4')"
-            href="#"
-            @click.prevent="openVideoModal(project.demoUrl)"
-            class="flex-1 bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 text-white text-center py-2 rounded-md font-semibold transition"
-          >
-            {{ $t('projects.demo') }}
-          </a>
-          <a
-            v-else
-            :href="project.demoUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex-1 bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 text-white text-center py-2 rounded-md font-semibold transition"
-          >
-            {{ $t('projects.demo') }}
-          </a>
-            <a
-              :href="project.repoUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="flex-1 bg-indigo-700 hover:bg-indigo-800 active:bg-indigo-900 text-indigo-200 text-center py-2 rounded-md font-semibold transition"
-            >
-              {{ $t('projects.repo') }}
-            </a>
+
+            <!-- Botones -->
+            <div class="mt-6 flex gap-3">
+              <!-- Demo (si no es .mp4 abre en nueva pestaña) -->
+              <a
+                v-if="!project.demoUrl.endsWith('.mp4')"
+                :href="project.demoUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-white font-semibold
+                       bg-gradient-to-r from-sky-500 via-indigo-600 to-fuchsia-600 shadow-md hover:shadow-lg hover:brightness-110 active:scale-95"
+              >
+                {{ $t('projects.demo') }}
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14 3h7m0 0v7m0-7L10 14"/>
+                </svg>
+              </a>
+
+              <button
+                v-else
+                @click.prevent="openVideoModal(project.demoUrl)"
+                class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-white font-semibold
+                       bg-gradient-to-r from-sky-500 via-indigo-600 to-fuchsia-600 shadow-md hover:shadow-lg hover:brightness-110 active:scale-95"
+              >
+                {{ $t('projects.demo') }}
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+
+              <a
+                :href="project.repoUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl font-semibold
+                       border border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-white active:scale-95 transition-all"
+              >
+                {{ $t('projects.repo') }}
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8.7 17.3 3.4 12l5.3-5.3 1.4 1.4L6.2 12l3.9 3.9-1.4 1.4Zm6.6 0-1.4-1.4L17.8 12l-3.9-3.9 1.4-1.4L20.6 12l-5.3 5.3Z"/>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </article>
     </div>
 
-    <!-- Modal para video -->
+    <!-- Modal de vídeo (claro) -->
     <div
       v-if="showVideoModal"
-      class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+      class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
       @click.self="closeVideoModal"
     >
-      <div class="bg-indigo-900 rounded-lg shadow-lg p-4 w-full max-w-3xl">
-        <div class="relative w-full max-h-[80vh] flex justify-center items-center">
-        <video
-          controls
-          autoplay
-          class="max-w-full max-h-[80vh] object-contain rounded-md"
-        >
-          <source :src="activeVideoUrl" type="video/mp4" />
-          Tu navegador no soporta video HTML5.
-        </video>
-      </div>
-        <button
-          @click="closeVideoModal"
-          class="mt-4 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
-        >
-          Cerrar
-        </button>
+      <div class="w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl">
+        <div class="p-1 bg-gradient-to-r from-sky-500 via-indigo-600 to-fuchsia-600">
+          <div class="bg-white rounded-2xl p-4">
+            <div class="relative w-full max-h-[80vh] flex justify-center items-center">
+              <video
+                controls
+                autoplay
+                class="max-w-full max-h-[70vh] object-contain rounded-md"
+              >
+                <source :src="activeVideoUrl" type="video/mp4" />
+                {{ $t('projects.videoNotSupported') }}
+              </video>
+            </div>
+            <div class="mt-4 flex justify-end">
+              <button
+                @click="closeVideoModal"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-semibold
+                       border border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-white active:scale-95"
+              >
+                {{ $t('projects.close') }}
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="m14.7 12 4.65-4.65-1.4-1.4L13.3 10.6 8.65 5.95l-1.4 1.4L11.9 12l-4.65 4.65 1.4 1.4 4.65-4.65 4.65 4.65 1.4-1.4Z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -120,6 +174,7 @@ export default {
           demoUrl: 'https://youtu.be/jteUFW18IEQ',
           repoUrl: 'https://github.com/IsaacSolisPadilla/EndOfLine',
           image: project1Image,
+          featured: true,
         },
         {
           id: 2,
@@ -145,21 +200,21 @@ export default {
   methods: {
     fadeIn(el) {
       el.style.opacity = 0
-      el.style.transform = 'translateY(20px)'
-      setTimeout(() => {
-        el.style.transition = 'opacity 0.7s ease, transform 0.7s ease'
+      el.style.transform = 'translateY(16px)'
+      requestAnimationFrame(() => {
+        el.style.transition = 'opacity .6s ease, transform .6s ease'
         el.style.opacity = 1
         el.style.transform = 'translateY(0)'
-      }, 100)
+      })
     },
     fadeInCard(el) {
       el.style.opacity = 0
-      el.style.transform = 'translateY(40px)'
-      setTimeout(() => {
-        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease'
+      el.style.transform = 'translateY(28px)'
+      requestAnimationFrame(() => {
+        el.style.transition = 'opacity .7s ease, transform .7s ease'
         el.style.opacity = 1
         el.style.transform = 'translateY(0)'
-      }, 100)
+      })
     },
     openVideoModal(url) {
       this.activeVideoUrl = url
@@ -177,9 +232,7 @@ export default {
         const callback = (entries, observer) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              if (binding.modifiers.once) {
-                observer.unobserve(el)
-              }
+              if (binding.modifiers.once) observer.unobserve(el)
               binding.value(el)
             }
           })
@@ -193,5 +246,8 @@ export default {
 </script>
 
 <style scoped>
-/* Puedes añadir animaciones aquí si lo deseas */
+/* (Opcional) micro-animación de “float” al pasar el mouse en desktop */
+@media (hover: hover) {
+  article:hover img { transform: scale(1.04); }
+}
 </style>
