@@ -4,6 +4,7 @@ import es from './locale/es'
 
 const i18n = createI18n({
   legacy: false,
+  globalInjection: true,
   locale: 'es',
   fallbackLocale: 'en',
   messages: {

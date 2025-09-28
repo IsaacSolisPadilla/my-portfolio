@@ -96,9 +96,9 @@ export default {
   data() {
     return {
       name: 'Isaac Solis Padilla',
-      email: 'hello@example.com',
-      github: 'https://github.com/tuusuario',
-      linkedin: 'https://linkedin.com/in/tuusuario',
+      email: 'isaacsolpad@gmail.com',
+      github: 'https://github.com/IsaacSolisPadilla',
+      linkedin: 'https://www.linkedin.com/in/isaacsolispadilla/',
       showTop: false,
       links: [
         { href: '#about',    label: 'nav.about' },

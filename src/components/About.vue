@@ -8,7 +8,7 @@
       class="w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-xl ring-4 ring-sky-100 hover:ring-sky-200 transition-all duration-500 hover:scale-[1.02]"
     >
       <img
-        src="./assets/profile.png"
+        src=""
         alt="Isaac Solis Padilla"
         class="object-cover w-full h-full"
         loading="lazy"

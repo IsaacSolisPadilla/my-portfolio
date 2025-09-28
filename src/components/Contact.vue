@@ -21,7 +21,7 @@
         <div class="flex justify-center md:justify-start gap-10 mt-4">
           <!-- GitHub -->
           <a
-            href="https://github.com/tuusuario"
+            href="https://github.com/IsaacSolisPadilla"
             target="_blank"
             rel="noopener noreferrer"
             class="group flex flex-col items-center space-y-2 text-slate-700 hover:text-slate-900 transition duration-300"
@@ -37,7 +37,7 @@
 
           <!-- LinkedIn -->
           <a
-            href="https://linkedin.com/in/tuusuario"
+            href="https://linkedin.com/in/isaacsolispadilla"
             target="_blank"
             rel="noopener noreferrer"
             class="group flex flex-col items-center space-y-2 text-slate-700 hover:text-slate-900 transition duration-300"
@@ -54,6 +54,7 @@
       </div>
 
       <!-- Derecha: Formulario -->
+      <div class="flex justify-center md:justify-end md:w-20/50 w-full">
       <Form
         :validation-schema="schema"
         @submit="handleSubmit"
@@ -139,6 +140,7 @@
         </p>
       </Form>
     </div>
+    </div>
   </section>
 </template>
 
@@ -166,37 +168,63 @@ export default {
     }
   },
   mounted() {
-    window.onRecaptchaLoaded = () => {
-      this.renderRecaptcha()
-    }
-    if (window.grecaptcha && window.grecaptcha.render) {
-      this.renderRecaptcha()
-    }
-  },
+  const start = () => this.$nextTick(() => this.renderRecaptcha())
+
+  // Si ya está cargado, arrancamos.
+  if (window.grecaptcha && window.grecaptcha.render) {
+    start()
+    return
+  }
+
+  // Inyecta el script si no existe aún
+  const existing = document.querySelector('script[src*="recaptcha/api.js"]')
+  if (!existing) {
+    const s = document.createElement('script')
+    s.src = 'https://www.google.com/recaptcha/api.js?render=explicit'
+    s.async = true
+    s.defer = true
+    s.onload = () => window.dispatchEvent(new Event('recaptcha-loaded'))
+    document.head.appendChild(s)
+  }
+
+  // Espera a que cargue
+  window.addEventListener('recaptcha-loaded', start, { once: true })
+},
   methods: {
     renderRecaptcha() {
-      if (!this.$refs.recaptchaEl || !window.grecaptcha || this.recaptchaWidgetId !== null) return
+  try {
+    if (!this.$refs.recaptchaEl) return
+    if (!window.grecaptcha || !window.grecaptcha.render) {
+      // opcional: reintentar en 200ms
+      setTimeout(this.renderRecaptcha, 200)
+      return
+    }
+    if (this.recaptchaWidgetId !== null) return
 
-      this.recaptchaWidgetId = window.grecaptcha.render(this.$refs.recaptchaEl, {
-        sitekey: '6LeNZrMrAAAAAEQtrNLr0JYnfZEsUItmZa7OkxEC', // tu sitekey v2
-        theme: 'light', // <-- claro para el nuevo diseño
-        size: 'normal',
-        callback: (token) => {
-          this.recaptchaVerified = true
-          this.recaptchaToken = token
-          this.errorMessage = ''
-        },
-        'expired-callback': () => {
-          this.recaptchaVerified = false
-          this.recaptchaToken = ''
-        },
-        'error-callback': () => {
-          this.recaptchaVerified = false
-          this.recaptchaToken = ''
-          this.errorMessage = 'No se pudo cargar reCAPTCHA. Recarga la página.'
-        },
-      })
-    },
+    this.recaptchaWidgetId = window.grecaptcha.render(this.$refs.recaptchaEl, {
+      sitekey: '6LcXR3srAAAAAHLAKZZYRMqzzoNUCDAuMYSWHl1_',
+      theme: 'light',
+      size: 'normal',
+      callback: (token) => {
+        this.recaptchaVerified = true
+        this.recaptchaToken = token
+        this.errorMessage = ''
+      },
+      'expired-callback': () => {
+        this.recaptchaVerified = false
+        this.recaptchaToken = ''
+      },
+      'error-callback': () => {
+        this.recaptchaVerified = false
+        this.recaptchaToken = ''
+        this.errorMessage = 'No se pudo cargar reCAPTCHA. Recarga la página.'
+      },
+    })
+  } catch (e) {
+    console.error('[reCAPTCHA] init error', e)
+    this.errorMessage = 'Error inicializando reCAPTCHA.'
+  }
+},
     handleSubmit(values) {
       if (!this.recaptchaVerified || !this.recaptchaToken) {
         this.errorMessage = 'Por favor, verifica que no eres un robot.'
