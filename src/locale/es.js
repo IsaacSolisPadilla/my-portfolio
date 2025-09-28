@@ -36,11 +36,13 @@ export default {
   },
   about: {
     title: "Sobre mí",
-    subtitle: "Ingeniero Informático & Desarrollador de Software",
+    subtitle: "Ingeniero Informático - Ingeniero del Software",
     description:
-      "Soy Isaac Solis Padilla, apasionado por la tecnología y el desarrollo de software de alta calidad. Me especializo en crear soluciones escalables y eficientes con las mejores prácticas y tecnologías modernas.",
+      "Soy Isaac Solís Padilla, recién graduado en Ingeniería Informática – mención en Ingeniería del Software por la Universidad de Sevilla.\n\nMe mueve una auténtica pasión por el desarrollo de software y un deseo constante de aprender.\n\nMe considero autodidacta, perseverante y con gran capacidad de implicación y sacrificio, cualidades que me han permitido superar retos académicos y personales.",
     download: "Descargar CV",
   },
+
+
   projects: {
     title: "Proyectos",
     demo: "Demo",
@@ -62,6 +64,7 @@ export default {
   },
   skills: {
     title: "Habilidades Técnicas",
+    note: "⚠️ Los porcentajes representan <strong>mi propio nivel relativo</strong> entre las tecnologías que conozco.<br class='hidden sm:inline' />No indican un dominio absoluto de cada herramienta.",
     groups: [
       {
         title: "Lenguajes de Programación",

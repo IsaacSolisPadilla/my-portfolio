@@ -16,7 +16,7 @@
     </div>
 
     <!-- Texto -->
-    <div class="flex flex-col max-w-xl">
+    <div class="flex flex-col max-w-3xl">
       <h2
         class="text-4xl md:text-5xl font-extrabold mb-3 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-indigo-600 to-fuchsia-600"
         v-intersect.once="fadeIn"
@@ -33,7 +33,7 @@
       </h3>
 
       <p
-        class="text-lg leading-relaxed mb-8 text-slate-600"
+        class="white-space-pre-line text-justify text-lg md:text-xl mb-8 text-slate-600"
         v-intersect.once="fadeIn"
         style="animation-delay:300ms"
       >

@@ -37,9 +37,9 @@ export default {
   },
   about: {
     title: "About Me",
-    subtitle: "Computer Engineer & Software Developer",
+    subtitle: "Computer Engineer - Software Engineer",
     description:
-      "I'm Isaac Solis Padilla, passionate about technology and high-quality software development. I specialize in building scalable and efficient solutions using modern technologies and best practices.",
+      "I am Isaac Solís Padilla, recently graduated in Computer Engineering – Software Engineering track at the University of Seville.\n\nI am driven by a genuine passion for software development and a constant desire to keep learning.\n\nI consider myself self-taught, persistent and highly committed, qualities that have helped me overcome both academic and personal challenges.",
     download: "Download CV",
   },
   projects: {
@@ -63,6 +63,7 @@ export default {
   },
   skills: {
     title: "Technical Skills",
+    note: "⚠️ These percentages reflect <strong>my own relative level</strong> among the technologies I know.<br class='hidden sm:inline' />They do not indicate absolute mastery of each tool.",
     groups: [
       {
         title: "Programming Languages",

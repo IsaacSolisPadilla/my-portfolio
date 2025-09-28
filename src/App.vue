@@ -4,8 +4,8 @@
     <Header />
     <About />
     <Projects />
-    <Contact />
     <Skills />
+    <Contact />
     <Footer />
   </div>
 </template>
@@ -25,8 +25,8 @@ export default {
     Header,
     About,
     Projects,
-    Contact,
     Skills,
+    Contact,
     Footer,
   },
 }

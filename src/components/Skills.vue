@@ -12,6 +12,12 @@
       {{ $t('skills.title') }}
     </h2>
 
+     <!-- Nota explicativa -->
+    <p
+      class="text-center text-sm md:text-base text-slate-600 max-w-3xl mx-auto mb-16 leading-relaxed"
+      v-html="$t('skills.note')"
+    ></p>
+
     <!-- Grid -->
     <div ref="cardsRef" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
       <div
@@ -97,51 +103,51 @@ export default {
     const skillGroups = [
       {
         skills: [
-          { name: 'JavaScript', level: 95, icon: javascriptIcon },
-          { name: 'Python', level: 90, icon: pythonIcon },
-          { name: 'Java', level: 85, icon: javaIcon },
-          { name: 'PHP', level: 80, icon: phpIcon },
+          { name: 'JavaScript', level: 75, icon: javascriptIcon },
+          { name: 'Python', level: 80, icon: pythonIcon },
+          { name: 'Java', level: 90, icon: javaIcon },
+          { name: 'PHP', level: 85, icon: phpIcon },
         ],
       },
       {
         skills: [
-          { name: 'Vue.js', level: 92, icon: vueIcon },
-          { name: 'React', level: 88, icon: reactIcon },
+          { name: 'Vue.js', level: 40, icon: vueIcon },
+          { name: 'React', level: 85, icon: reactIcon },
           { name: 'React Native', level: 80, icon: reactNativeIcon },
-          { name: 'Laravel', level: 78, icon: laravelIcon },
-          { name: 'Spring', level: 75, icon: springIcon },
-          { name: 'Spring Boot', level: 70, icon: spring2Icon },
-          { name: 'Django', level: 82, icon: djangoIcon },
+          { name: 'Laravel', level: 65, icon: laravelIcon },
+          { name: 'Spring', level: 90, icon: springIcon },
+          { name: 'Spring Boot', level: 90, icon: spring2Icon },
+          { name: 'Django', level: 60, icon: djangoIcon },
         ],
       },
       {
         skills: [
           { name: 'MySQL', level: 85, icon: mysqlIcon },
           { name: 'MariaDB', level: 80, icon: mariadbIcon },
-          { name: 'SQLite', level: 75, icon: sqliteIcon },
+          { name: 'SQLite', level: 80, icon: sqliteIcon },
         ],
       },
       {
         skills: [
           { name: 'Git', level: 95, icon: gitIcon },
           { name: 'GitHub', level: 90, icon: githubIcon },
-          { name: 'GitHub Actions', level: 80, icon: githubActionsIcon },
-          { name: 'Postman', level: 85, icon: postmanIcon },
-          { name: 'Linux', level: 80, icon: linuxIcon },
-          { name: 'Jupyter', level: 75, icon: jupyterIcon },
-          { name: 'WordPress', level: 70, icon: wordpressIcon },
+          { name: 'GitHub Actions', level: 60, icon: githubActionsIcon },
+          { name: 'Postman', level: 95, icon: postmanIcon },
+          { name: 'Linux', level: 65, icon: linuxIcon },
+          { name: 'Jupyter', level: 80, icon: jupyterIcon },
+          { name: 'WordPress', level: 95, icon: wordpressIcon },
         ],
       },
       {
         skills: [
-          { name: 'Node.js', level: 85, icon: nodeIcon },
+          { name: 'Node.js', level: 60, icon: nodeIcon },
         ],
       },
       {
         skills: [
-          { name: 'Agile / Scrum', level: 90, icon: githubActionsIcon },
-          { name: 'Liderazgo Técnico', level: 85, icon: githubActionsIcon },
-          { name: 'Resolución de Problemas', level: 95, icon: githubActionsIcon },
+          { name: 'Agile / Scrum', level: 75, icon: githubActionsIcon },
+          { name: 'Liderazgo Técnico', level: 40, icon: githubActionsIcon },
+          { name: 'Resolución de Problemas', level: 60, icon: githubActionsIcon },
         ],
       },
     ]

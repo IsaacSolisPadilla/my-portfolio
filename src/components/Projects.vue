@@ -3,7 +3,8 @@
     <!-- Título -->
     <h2
       class="text-4xl md:text-5xl font-extrabold mb-12 text-center tracking-tight
-             bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-indigo-600 to-fuchsia-600"
+            bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-indigo-600 to-fuchsia-600
+            leading-[1.15] md:leading-[1.12] pb-1"
       v-intersect.once="fadeIn"
     >
       {{ $t('projects.title') }}
