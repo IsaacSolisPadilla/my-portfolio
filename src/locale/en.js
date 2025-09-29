@@ -16,31 +16,67 @@ export default {
     skills: 'Skills',
   },
   contact: {
-    title: 'Contact',
-    description:
-      'Want to collaborate? Have a question or proposal? Write to me or connect through my professional networks.',
-    github: 'GitHub',
-    linkedin: 'LinkedIn',
+    title: "Contact",
+    description: "Want to collaborate? Have a question or proposal? Write to me or connect through my professional networks.",
+    github: "GitHub",
+    linkedin: "LinkedIn",
     form: {
-      title: 'Contact Form',
-      name: 'Name',
-      namePlaceholder: 'Your full name',
-      email: 'Email',
-      emailPlaceholder: 'your@email.com',
-      message: 'Message',
-      messagePlaceholder: 'Write your message here...',
-      submit: 'Send message',
+      title: "Contact Form",
+      name: "Name",
+      namePlaceholder: "Your full name",
+      email: "Email",
+      emailPlaceholder: "your@email.com",
+      message: "Message",
+      messagePlaceholder: "Write your message here...",
+      send: "Send message"
     },
-    success: 'Message sent successfully. Thank you!',
-    error: 'Failed to send message. Please try again.',
-    recaptchaError: 'Please verify you are not a robot.',
-  },
-  about: {
-    title: "About Me",
-    subtitle: "Computer Engineer - Software Engineer",
-    description:
-      "I am Isaac Solís Padilla, recently graduated in Computer Engineering – Software Engineering track at the University of Seville.\n\nI am driven by a genuine passion for software development and a constant desire to keep learning.\n\nI consider myself self-taught, persistent and highly committed, qualities that have helped me overcome both academic and personal challenges.",
-    download: "Download CV",
+    success: "Message sent successfully. Thank you!",
+    error: "Failed to send message. Please try again.",
+    recaptchaError: "Please verify you are not a robot.",
+
+    highlights: {
+      fastResponse: "Fast response",
+      availableForProjects: "Available for projects",
+      learnAndGrow: "Learn and grow"
+    },
+
+    cards: {
+      email: {
+        title: "Email",
+        sendButton: "Send email",
+        copyButton: "Copy email",
+        copiedAria: "Copied",
+        copyAria: "Copy email",
+        copiedToast: "Email copied to clipboard!"
+      }
+    },
+
+    whatsapp: {
+      title: "WhatsApp",
+      button: "Message on WhatsApp",
+      defaultMessage: "Hi Isaac! I'm reaching out from your portfolio."
+    },
+
+    availability: {
+      title: "Availability",
+      responseTime: "Response within 24–48h (CET)",
+      quickContact: "Quick contact",
+      connectLinkedIn: "Connect on LinkedIn"
+    },
+
+    aria: {
+      github: "GitHub",
+      linkedin: "LinkedIn"
+    },
+
+    mail: {
+      subjectDefault: "Hi Isaac — I'm interested in your profile",
+      bodyDefault: "Hi Isaac, I saw your portfolio and I'd like to talk with you about..."
+    },
+
+    alerts: {
+      copyFail: "Could not copy. Please select the email and copy manually."
+    }
   },
   projects: {
     title: "Projects",
@@ -57,7 +93,7 @@ export default {
       },
       {
         title: "CARONTE",
-        description: "CARONTE is a cross-platform mobile app for creating personalized memorials and sending farewell messages to loved ones, with a thoughtful and respectful approach."
+        description: "CARONTE is a cross-platform app for creating personalized memorials and sending farewell messages to loved ones, with a thoughtful and respectful approach."
       }
     ]
   },
@@ -123,7 +159,7 @@ export default {
     ]
   },
   footer: {
-    about: "Full-stack developer focused on UX, performance, and scalable products.",
+    about: "Developer passionate about learning and creating high-performance products.",
     contact: "Contact",
     madeWith: "Made with",
     backToTop: "Back to top",

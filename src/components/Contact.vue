@@ -25,15 +25,15 @@
         <div class="flex flex-wrap justify-center md:justify-start gap-3">
           <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 shadow-sm">
             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a9 9 0 109 9 9.01 9.01 0 00-9-9zm.75 4.5v5.19l4.22 2.53-.75 1.23L11.25 13V7.5z"/></svg>
-            Respuesta rápida
+            {{ $t?.('contact.highlights.availableForProjects') }}
           </span>
           <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 shadow-sm">
             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6a3 3 0 013-3h7l5 5v10a3 3 0 01-3 3H6a3 3 0 01-3-3z"/></svg>
-            Disponible para proyectos
+            {{ $t?.('contact.highlights.availableForProjects')}}
           </span>
           <span class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 shadow-sm">
             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22L12 2zm0 4.84L19.53 19H4.47L12 6.84zM11 10h2v5h-2zm0 6h2v2h-2z"/></svg>
-            Aprender y crecer
+            {{ $t?.('contact.highlights.learnAndGrow')}}
           </span>
         </div>
 
@@ -92,7 +92,7 @@
                   </svg>
                 </div>
                 <div>
-                  <p class="text-xs uppercase tracking-wider text-slate-500">Email</p>
+                  <p class="text-xs uppercase tracking-wider text-slate-500">{{ $t?.('contact.cards.email.title') }}</p>
                   <p class="font-semibold text-slate-800 select-all">{{ email }}</p>
                 </div>
               </div>
@@ -104,7 +104,7 @@
                 :href="`mailto:${email}?subject=${encodeURIComponent(asuntoMail)}&body=${encodeURIComponent(cuerpoMail)}`"
               >
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M2 6h20v12H2z" opacity=".25"/><path d="M22 6l-10 6L2 6V5l10 6 10-6v1z"/></svg>
-                Enviar email
+                {{ $t?.('contact.cards.email.sendButton')}}
               </a>
               <button
                 class="inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-3 font-medium text-slate-700 shadow-sm hover:bg-slate-50 active:bg-slate-100 transition"
@@ -116,7 +116,7 @@
               </button>
             </div>
 
-            <p v-if="copiado" class="relative mt-3 text-sm text-green-600">¡Email copiado al portapapeles!</p>
+            <p v-if="copiado" class="relative mt-3 text-sm text-green-600">{{ $t?.('contact.cards.email.copiedToast') }}</p>
           </div>
 
           <!-- Tarjeta WhatsApp (opcional: oculta si no hay phone) -->
@@ -133,7 +133,7 @@
                 </svg>
               </div>
               <div>
-                <p class="text-xs uppercase tracking-wider text-slate-500">WhatsApp</p>
+                <p class="text-xs uppercase tracking-wider text-slate-500">{{ $t?.('contact.whatsapp.title') }}</p>
                 <p class="font-semibold text-slate-800 select-all">{{ phone }}</p>
               </div>
             </div>
@@ -145,7 +145,7 @@
                 target="_blank" rel="noopener noreferrer"
               >
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.94 14.38L2 22l5.76-1.51A10 10 0 1012 2z"/></svg>
-                Escribir por WhatsApp
+                {{ $t?.('contact.whatsapp.button') }}
               </a>
             </div>
           </div>
@@ -162,8 +162,8 @@
                   <svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2v2H5a2 2 0 00-2 2v2h18V6a2 2 0 00-2-2h-2V2h-2v2H9V2H7zm14 8H3v10a2 2 0 002 2h14a2 2 0 002-2V10z"/></svg>
                 </div>
                 <div>
-                  <p class="text-xs uppercase tracking-wider text-slate-500">Disponibilidad</p>
-                  <p class="font-semibold text-slate-800">Respuesta en 24–48h (CET)</p>
+                  <p class="text-xs uppercase tracking-wider text-slate-500">{{ $t?.('contact.availability.title') }}</p>
+                  <p class="font-semibold text-slate-800">{{ $t?.('contact.availability.responseTime') }}</p>
                 </div>
               </div>
 
@@ -173,7 +173,7 @@
                   class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 font-medium text-slate-700 shadow-sm hover:bg-slate-50 active:bg-slate-100 transition"
                 >
                   <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M2 6h20v12H2z" opacity=".25"/><path d="M22 6l-10 6L2 6V5l10 6 10-6v1z"/></svg>
-                  Contacto rápido
+                  {{ $t?.('contact.availability.quickContact')}}
                 </a>
                 <a
                   href="https://linkedin.com/in/isaacsolispadilla"
@@ -181,7 +181,7 @@
                   class="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-sky-500 via-indigo-600 to-fuchsia-600 px-4 py-3 font-semibold text-white shadow hover:opacity-95 active:opacity-90 transition"
                 >
                   <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M20 3a2 2 0 012 2v14a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h16zm-9 8H8v7h3v-7zm-1.5-1.75a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5zM19 13.5c0-2.22-1.18-3.25-2.76-3.25A2.37 2.37 0 0014 11.49V11h-3v7h3v-3.75c0-1 .19-1.97 1.43-1.97s1.57 1.12 1.57 2.04V18h3v-4.5z"/></svg>
-                  Conectar en LinkedIn
+                  {{ $t?.('contact.availability.connectLinkedIn') }}
                 </a>
               </div>
             </div>
@@ -200,10 +200,9 @@ export default {
   data() {
     return {
       email: 'isaacsolpad@gmail.com',
-      asuntoMail: 'Hola Isaac — Me interesa tu perfil',
-      cuerpoMail:
-        'Hola Isaac,%0D%0A%0D%0AHe visto tu portfolio y me gustaría hablar contigo sobre...',
-      phone: '+34 611643913', 
+      asuntoMail: this.$t?.('contact.mail.subjectDefault'),
+      cuerpoMail: this.$t?.('contact.mail.bodyDefault'),
+      phone: '+34 611643913',
       copiado: false,
     }
   },
@@ -215,7 +214,7 @@ export default {
         .replace(/^\+/, '')
     },
     mensajeWA() {
-      return '¡Hola Isaac! Te contacto desde tu portfolio.'
+      return this.$t?.('contact.whatsapp.defaultMessage')
     },
   },
   methods: {

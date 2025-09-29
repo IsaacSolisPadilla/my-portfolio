@@ -128,8 +128,9 @@ export default {
     const navLinks = [
       { id: 1, label: 'nav.about', href: '#about' },
       { id: 2, label: 'nav.projects', href: '#projects' },
-      { id: 3, label: 'nav.contact', href: '#contact' },
       { id: 4, label: 'nav.skills', href: '#skills' },
+      { id: 3, label: 'nav.contact', href: '#contact' },
+
     ]
 
     const languages = [

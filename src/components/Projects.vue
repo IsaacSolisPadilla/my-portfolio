@@ -15,8 +15,7 @@
       <article
         v-for="project in projects"
         :key="project.id"
-        class="group rounded-2xl p-1 bg-gradient-to-br from-sky-500/25 via-indigo-600/25 to-fuchsia-600/25
-               hover:from-sky-500/35 hover:to-fuchsia-600/35 transition-colors"
+        class="group rounded-2xl p-1 bg-gradient-to-br from-sky-500/25 via-indigo-600/25 to-fuchsia-600/25"
         v-intersect.once="fadeInCard"
       >
         <!-- Card interior (glass) -->
@@ -29,10 +28,7 @@
               class="w-full h-full object-contain transition-transform duration-700 ease-out
                      group-hover:scale-[1.04]"
             />
-            <!-- Glow sutil -->
-            <div class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                 style="background: radial-gradient(60% 60% at 50% 50%, rgba(56,189,248,.25), rgba(167,139,250,.18), rgba(236,72,153,.14) 70%, transparent 75%);">
-            </div>
+           
 
             <!-- Indicador vídeo si es .mp4 -->
             <button
