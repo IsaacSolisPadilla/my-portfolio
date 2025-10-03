@@ -158,6 +158,14 @@ export default {
       }
     ]
   },
+  about: {
+    title: "About Me",
+    subtitle: "Computer Engineer – Software Engineer",
+    description:
+      "I am Isaac Solís Padilla, a recent graduate in Computer Engineering – with a specialization in Software Engineering from the University of Seville.\n\nI am driven by a true passion for software development and a constant desire to learn.\n\nI consider myself self-taught, persistent and highly committed, qualities that have enabled me to overcome both academic and personal challenges.",
+    download: "Download CV"
+  },
+
   footer: {
     about: "Developer passionate about learning and creating high-performance products.",
     contact: "Contact",

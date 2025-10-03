@@ -61,14 +61,14 @@
 <script>
 import { useI18n } from 'vue-i18n'
 import { computed } from 'vue'
+import cvEs from '../assets/CV_IsaacSolis_ES.pdf'
+import cvEn from '../assets/CV_IsaacSolis_EN.pdf'
 
 export default {
   name: 'About',
   setup() {
     const { locale } = useI18n()
-    const cvLink = computed(() => (locale.value === 'en'
-      ? '/assets/cv-isaac-en.pdf'
-      : '/assets/cv-isaac-es.pdf'))
+    const cvLink = computed(() => (locale.value === 'en' ? cvEn : cvEs))
     return { cvLink }
   },
   methods: {
