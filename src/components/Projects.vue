@@ -1,34 +1,41 @@
 <template>
   <section id="projects" class="max-w-7xl mx-auto px-6 py-20 md:py-32">
-    <!-- Título -->
     <h2
       class="text-4xl md:text-5xl font-extrabold mb-12 text-center tracking-tight
-            bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-indigo-600 to-fuchsia-600
-            leading-[1.15] md:leading-[1.12] pb-1"
-      v-intersect.once="fadeIn"
+             bg-clip-text text-transparent bg-gradient-to-r from-sky-500 via-indigo-600 to-fuchsia-600
+             leading-[1.15] md:leading-[1.12] pb-1"
+      v-reveal
     >
       {{ $t('projects.title') }}
     </h2>
 
-    <!-- Grid de proyectos -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
       <article
-        v-for="project in projects"
+        v-for="(project, idx) in projects"
         :key="project.id"
         class="group rounded-2xl p-1 bg-gradient-to-br from-sky-500/25 via-indigo-600/25 to-fuchsia-600/25"
-        v-intersect.once="fadeInCard"
+        v-reveal
       >
-        <!-- Card interior (glass) -->
-        <div class="relative h-full rounded-2xl bg-white/80 backdrop-blur border border-white shadow-lg overflow-hidden">
+        <!-- Card interior: glass en desktop; en móvil sin blur (más barato) -->
+        <div
+          class="relative h-full rounded-2xl bg-white/85 border border-white shadow-lg overflow-hidden
+                 md:backdrop-blur"
+        >
           <!-- Imagen -->
           <div class="relative aspect-video overflow-hidden">
             <img
-              :src="project.image"
+              :src="project.images?.fallback || project.image"
+              :srcset="project.images
+                ? `${project.images.w320} 320w, ${project.images.w640} 640w, ${project.images.w960} 960w`
+                : null"
+              sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
               :alt="$t(project.title)"
-              class="w-full h-full object-contain transition-transform duration-700 ease-out
-                     group-hover:scale-[1.04]"
+              class="w-full h-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              :loading="idx === 0 ? 'eager' : 'lazy'"
+              :fetchpriority="idx === 0 ? 'high' : 'low'"
+              decoding="async"
+              width="960" height="540"
             />
-           
 
             <!-- Indicador vídeo si es .mp4 -->
             <button
@@ -54,7 +61,6 @@
               {{ $t(project.description) }}
             </p>
 
-            <!-- Chips -->
             <div class="mt-4 flex flex-wrap gap-2">
               <span
                 v-for="tech in project.technologies"
@@ -65,9 +71,8 @@
               </span>
             </div>
 
-            <!-- Botones -->
             <div class="mt-6 flex gap-3">
-              <!-- Demo (si no es .mp4 abre en nueva pestaña) -->
+              <!-- Demo (si no es .mp4) -->
               <a
                 v-if="!project.demoUrl.endsWith('.mp4')"
                 :href="project.demoUrl"
@@ -113,7 +118,7 @@
       </article>
     </div>
 
-    <!-- Modal de vídeo (claro) -->
+    <!-- Modal vídeo -->
     <div
       v-if="showVideoModal"
       class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4"
@@ -124,8 +129,11 @@
           <div class="bg-white rounded-2xl p-4">
             <div class="relative w-full max-h-[80vh] flex justify-center items-center">
               <video
+                ref="videoEl"
                 controls
                 autoplay
+                playsinline
+                preload="metadata"
                 class="max-w-full max-h-[70vh] object-contain rounded-md"
               >
                 <source :src="activeVideoUrl" type="video/mp4" />
@@ -152,9 +160,18 @@
 </template>
 
 <script>
+/**
+ * Importa variantes responsivas (idealmente WebP).
+ * Si aún no las tienes, deja sólo projectXImage y elimina "images" abajo.
+ */
 import project1Image from '../assets/eol.png'
 import project2Image from '../assets/todus.png'
 import project3Image from '../assets/caronte.png'
+
+// Ejemplo (cuando tengas WebP generados):
+// import p1_320 from '../assets/eol-320.webp'
+// import p1_640 from '../assets/eol-640.webp'
+// import p1_960 from '../assets/eol-960.webp'
 
 export default {
   name: 'Projects',
@@ -172,6 +189,7 @@ export default {
           repoUrl: 'https://github.com/IsaacSolisPadilla/EndOfLine',
           image: project1Image,
           featured: true,
+          // images: { w320: p1_320, w640: p1_640, w960: p1_960, fallback: project1Image },
         },
         {
           id: 2,
@@ -181,6 +199,7 @@ export default {
           demoUrl: 'https://youtu.be/Yo3TVPByef4',
           repoUrl: 'https://github.com/IsaacSolisPadilla/ToDUS',
           image: project2Image,
+          // images: { w320: ..., w640: ..., w960: ..., fallback: project2Image },
         },
         {
           id: 3,
@@ -190,51 +209,50 @@ export default {
           demoUrl: 'https://www.caronte.site/',
           repoUrl: 'https://github.com/ISPP-2425-G9',
           image: project3Image,
+          // images: { w320: ..., w640: ..., w960: ..., fallback: project3Image },
         },
       ],
     }
   },
   methods: {
-    fadeIn(el) {
-      el.style.opacity = 0
-      el.style.transform = 'translateY(16px)'
-      requestAnimationFrame(() => {
-        el.style.transition = 'opacity .6s ease, transform .6s ease'
-        el.style.opacity = 1
-        el.style.transform = 'translateY(0)'
-      })
-    },
-    fadeInCard(el) {
-      el.style.opacity = 0
-      el.style.transform = 'translateY(28px)'
-      requestAnimationFrame(() => {
-        el.style.transition = 'opacity .7s ease, transform .7s ease'
-        el.style.opacity = 1
-        el.style.transform = 'translateY(0)'
-      })
-    },
     openVideoModal(url) {
       this.activeVideoUrl = url
       this.showVideoModal = true
+      document.documentElement.style.overflow = 'hidden'
     },
     closeVideoModal() {
+      const video = this.$refs.videoEl
+      if (video) { video.pause(); video.currentTime = 0 }
       this.activeVideoUrl = ''
       this.showVideoModal = false
+      document.documentElement.style.overflow = ''
     },
   },
   directives: {
-    intersect: {
-      mounted(el, binding) {
-        const options = { threshold: 0.15 }
-        const callback = (entries, observer) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              if (binding.modifiers.once) observer.unobserve(el)
-              binding.value(el)
-            }
-          })
+    // Directiva que NO anima si el elemento ya es visible al cargar
+    reveal: {
+      mounted(el) {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        const rect = el.getBoundingClientRect()
+        const initiallyVisible =
+          rect.top < window.innerHeight && rect.bottom > 0 && window.scrollY === 0
+
+        if (reduce || initiallyVisible) {
+          el.classList.add('is-visible')
+          return
         }
-        const observer = new IntersectionObserver(callback, options)
+
+        el.classList.add('reveal')
+
+        const observer = new IntersectionObserver((entries, obs) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              el.classList.add('is-visible')
+              obs.unobserve(el)
+            }
+          }
+        }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' })
+
         observer.observe(el)
       },
     },
@@ -243,8 +261,24 @@ export default {
 </script>
 
 <style scoped>
-/* (Opcional) micro-animación de “float” al pasar el mouse en desktop */
+/* Animación suave sólo cuando se añade 'reveal' */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .6s ease, transform .6s ease;
+}
+.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hover micro en desktop */
 @media (hover: hover) {
   article:hover img { transform: scale(1.04); }
+}
+
+/* Accesibilidad: menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
 }
 </style>

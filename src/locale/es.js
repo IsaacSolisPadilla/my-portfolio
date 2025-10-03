@@ -79,7 +79,7 @@ export default {
   },
   about: {
     title: "Sobre mí",
-    subtitle: "Ingeniero Informático - Ingeniero del Software",
+    subtitle: "Ingeniero Informático - Ingeniero de Software",
     description:
       "Soy Isaac Solís Padilla, recién graduado en Ingeniería Informática – mención en Ingeniería del Software por la Universidad de Sevilla.\n\nMe mueve una auténtica pasión por el desarrollo de software y un deseo constante de aprender.\n\nMe considero autodidacta, perseverante y con gran capacidad de implicación y sacrificio, cualidades que me han permitido superar retos académicos y personales.",
     download: "Descargar CV",
