@@ -206,7 +206,7 @@ export default {
           title: 'projects.items.2.title',
           description: 'projects.items.2.description',
           technologies: ['React Native', 'CSS', 'HTML', 'JavaScript', 'Node.js', 'MySQL', 'Spring Boot', 'Java'],
-          demoUrl: 'https://www.caronte.site/',
+          demoUrl: 'https://youtu.be/CUF0JLJ-yL4',
           repoUrl: 'https://github.com/ISPP-2425-G9',
           image: project3Image,
           // images: { w320: ..., w640: ..., w960: ..., fallback: project3Image },
