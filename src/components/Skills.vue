@@ -1,5 +1,9 @@
 <template>
-  <section id="skills" class="relative py-24 px-6 max-w-7xl mx-auto">
+  <section
+    id="skills"
+    class="relative py-24 px-6 max-w-7xl mx-auto"
+    :key="$i18n.locale"
+  >
     <!-- Título -->
     <h2
       ref="titleRef"
@@ -67,7 +71,8 @@
 </template>
 
 <script>
-import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
+import { ref, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 // Icons
 import djangoIcon from '../assets/skills/django.svg'
@@ -96,9 +101,12 @@ import wordpressIcon from '../assets/skills/wordpress.svg'
 export default {
   name: 'Skills',
   setup() {
+    const { locale } = useI18n() // 👈 para detectar cambios de idioma
+
     const titleRef = ref(null)
     const cardsRef = ref(null)
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
     const skillGroups = [
       {
         skills: [
@@ -153,6 +161,20 @@ export default {
     let observer = null
     let resizeRaf = null
 
+    const cleanupFns = []
+
+    const killGsap = () => {
+      // Elimina triggers
+      if (ScrollTrigger) {
+        ScrollTrigger.getAll().forEach(t => t.kill())
+      }
+      // Elimina listeners registrados en initGsap
+      if (cleanupFns.length) {
+        cleanupFns.forEach(fn => fn())
+        cleanupFns.length = 0
+      }
+    }
+
     const initGsap = async () => {
       if (reduceMotion) return // no animamos, ya hay fallback CSS
       if (!gsap) {
@@ -187,10 +209,11 @@ export default {
         })
       }
 
-      // Barras
+      // Barras (asegura estado inicial 0% antes de animar)
       skillGroups.forEach(group => {
         group.skills.forEach(skill => {
           if (!skill.barRef) return
+          skill.barRef.style.width = '0%'
           gsap.fromTo(
             skill.barRef,
             { width: '0%' },
@@ -208,26 +231,29 @@ export default {
       const onResize = () => {
         if (resizeRaf) return
         resizeRaf = requestAnimationFrame(() => {
-          ScrollTrigger.refresh()
+          ScrollTrigger && ScrollTrigger.refresh()
           resizeRaf = null
         })
       }
       window.addEventListener('resize', onResize, { passive: true })
-      // guardamos para cleanup
       cleanupFns.push(() => window.removeEventListener('resize', onResize))
     }
 
-    // Cleanup acumulado
-    const cleanupFns = []
     onBeforeUnmount(() => {
-      cleanupFns.forEach(fn => fn())
-      if (ScrollTrigger) ScrollTrigger.getAll().forEach(tr => tr.kill())
+      killGsap()
+      if (observer) {
+        observer.disconnect()
+        observer = null
+      }
     })
 
     onMounted(() => {
       nextTick(() => {
         if (reduceMotion) {
-          // Sin animaciones: ya dejamos los widths al montar (hecho en template)
+          // Sin animaciones: deja las barras con su valor final
+          skillGroups.forEach(g =>
+            g.skills.forEach(s => { if (s.barRef) s.barRef.style.width = `${s.level}%` })
+          )
           return
         }
         // Inicia GSAP solo cuando la sección entra en viewport (ahorra JS en home)
@@ -245,6 +271,30 @@ export default {
         if (titleRef.value) observer.observe(titleRef.value)
         cleanupFns.push(() => observer && observer.disconnect())
       })
+    })
+
+    // 🔁 Re-inicializa animaciones cuando cambia el idioma
+    watch(locale, async () => {
+      await nextTick() // DOM ya refleja nuevo idioma y refs por :ref se reasignan
+
+      if (reduceMotion) {
+        // Sin animaciones: asegura que las barras muestren su valor final
+        skillGroups.forEach(g =>
+          g.skills.forEach(s => { if (s.barRef) s.barRef.style.width = `${s.level}%` })
+        )
+        return
+      }
+
+      // Limpia animaciones/listeners previos y re-inicia GSAP
+      killGsap()
+
+      // Asegura estado inicial de barras a 0 antes de reanimar
+      skillGroups.forEach(g =>
+        g.skills.forEach(s => { if (s.barRef) s.barRef.style.width = '0%' })
+      )
+
+      await initGsap()
+      ScrollTrigger && ScrollTrigger.refresh()
     })
 
     return { titleRef, cardsRef, skillGroups, reduceMotion }
